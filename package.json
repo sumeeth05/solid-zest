@@ -4,20 +4,22 @@
   "description": "Lightweight, intuitive state management for Solid.js — inspired by Redux and Zustand.",
   "license": "MIT",
   "author": "sumeeth",
+  "type": "module",
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sumeeth05/blackpine.git"
+    "url": "git+https://github.com/sumeeth05/solid-zest.git"
   },
-  "homepage": "https://github.com/sumeeth05/blackpine#readme",
+  "homepage": "https://github.com/sumeeth05/solid-zest#readme",
   "bugs": {
-    "url": "https://github.com/sumeeth05/blackpine/issues"
+    "url": "https://github.com/sumeeth05/solid-zest/issues"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "private": false,
   "sideEffects": false,
@@ -26,7 +28,6 @@
     "zest",
     "solid-zest"
   ],
-  "type": "commonjs",
   "peerDependencies": {
     "solid-js": "^1.0.0"
   },
@@ -35,5 +36,16 @@
     "tsup": "^8.5.1",
     "tsup-preset-solid": "^2.2.0",
     "typescript": "^5.9.3"
-  }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "browser": {},
+  "exports": {
+    "import": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "typesVersions": {}
 }
