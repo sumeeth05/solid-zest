@@ -1,7 +1,7 @@
 {
   "name": "solid-zest",
   "version": "1.0.0",
-  "description": "A lightweight, type-safe, and modular state management library for SolidJS. Inspired by Redux Toolkit and Zustand and built for Solid's fine-grained reactivity.",
+  "description": "A lightweight, type-safe, and modular state management library for SolidJS. Inspired by Redux Toolkit/Zustand and built for Solid's fine-grained reactivity.",
   "license": "MIT",
   "author": "sumeeth",
   "type": "module",

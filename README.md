@@ -1,6 +1,6 @@
 # 🍋 solid-zest
 
-Lightweight, intuitive state management for Solid.js. Inspired by Redux Toolkit and Zustand, but engineered specifically for Solid's fine-grained reactivity.
+Lightweight, intuitive state management for Solid.js. Inspired by Redux Toolkit and Zustand for Solid's fine-grained reactivity.
 
 ## ✨ Features
 
