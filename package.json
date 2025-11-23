@@ -1,6 +1,6 @@
 {
   "name": "solid-zest",
-  "version": "1.0.4",
+  "version": "1.0.0",
   "description": "Lightweight, intuitive state management for Solid.js — inspired by Redux and Zustand.",
   "license": "MIT",
   "author": "sumeeth",
