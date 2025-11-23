@@ -1,43 +1,42 @@
-# ⚡️solid-zest
+# 🍋 solid-zest
 
-Lightweight, intuitive state management for Solid.js — inspired by Redux and Zustand.
+Lightweight, intuitive state management for Solid.js. Inspired by Redux Toolkit and Zustand, but engineered specifically for Solid's fine-grained reactivity.
 
-- ⚛️ Native SolidJS reactivity
-- ⚡ Zero-dependency core
-- 🎯 Strong TypeScript support
-- 🧩 Slice-based architecture
-- 🔍 Built-in devtools logging
-- 🔥 Lightweight (~700B gzipped)
+## ✨ Features
 
-## 🧠 How It Works
+- **⚛️ Native Reactivity:** Built directly on Solid's createStore and produce.
+- **⚡ Zero "Spread" Penalty:** Separates state access from actions to prevent accidental re-renders.
+- **🚀 Tiny Footprint:** Zero dependencies and ultra-lightweight (~700B gzipped).
+- **🎯 TypeScript First:** Automatic type inference for state and actions—no boilerplate.
+- **🧩 Slice Architecture:** Organize complex state into modular, manageable chunks.
+- **🛠 Built-in Logging:** Simple console-based devtools for debugging state changes.
 
-solid-zest lets you organize your global state into **slices**. A slice contains:
+## 🧠 Why solid-zest?
 
-- a **name** to identify the slice
-- **initial state**
-- a set of **actions** that mutate the state (in-place, using Immer-style updates)
+Most SolidJS store libraries merge state and actions into a single object. This can lead to reactivity leaks: if a component destructures an action from the store, it might accidentally subscribe to the entire state object (depending on implementation), causing unnecessary re-renders.
 
-You then:
+solid-zest enforces a strict separation:
 
-1. **Define** each slice using `defineSlice`.
-2. **Combine** slices into a single store using `defineStore`.
-3. **Create context access** using `createProvider`, which returns `StoreProvider` and `useStore`.
-4. **Wrap your app** with `StoreProvider`.
-5. **Access your state/actions** using the `useStore()` hook from anywhere in the component tree.
+- `slice.state:` A reactive Proxy (tracked by Solid).
+- `slice.actions:` A static object of functions (untracked).
 
-All state and actions are automatically **typed** and **reactive** — no dispatching, no selectors, no boilerplate.
+This ensures your components only re-render when the specific data they consume changes.
 
 ## 📦 Installation
 
 ```bash
 npm install solid-zest
+# or
+pnpm add solid-zest
+# or
+yarn add solid-zest
 ```
 
-## 📚 Step-by-Step Implementation
+## 📚 Quick Start
 
-### 1. Create a Slice
+### 1. Define a Slice
 
-Create a new file `store/counterSlice.ts`:
+Create a file `store/store.ts`. And Create a slice with an initial state and actions.
 
 ```tsx
 import { defineSlice } from 'solid-zest';
@@ -56,7 +55,7 @@ export const counterSlice = defineSlice({
 
 ### 2. Configure the Store
 
-Create a file `store/config.ts`:
+Create a file `store/config.ts`. And Combine your slices into a single store and export the provider.
 
 ```tsx
 import { defineStore, createProvider } from 'solid-zest';
@@ -74,9 +73,9 @@ const { StoreProvider, useStore } = createProvider<typeof store>();
 export { store, StoreProvider, useStore };
 ```
 
-### 3. Provide the Store in Root
+### 3. Wrap Your App
 
-Edit `index.tsx`:
+In `index.tsx` Provide the store at the root of your application.
 
 ```tsx
 import { render } from 'solid-js/web';
@@ -93,7 +92,7 @@ render(
 );
 ```
 
-### 4. Use the Store in Components
+### 4. Use in Components
 
 Use state/actions directly with the useStore hook:
 
@@ -101,15 +100,15 @@ Use state/actions directly with the useStore hook:
 import { useStore } from './store/config';
 
 export default function App() {
-  const store = useStore();
+  const { counter } = useStore();
 
   return (
     <div>
-      <h1>{store.counter.count}</h1>
-      <button onclick={store.counter.increment}>+</button>
-      <button onclick={store.counter.decrement}>-</button>
-      <button onclick={() => store.counter.add(5)}>+5</button>
-      <button onclick={store.counter.reset}>Reset</button>
+      <h1>{counter.state.count}</h1>
+      <button onclick={counter.actions.increment}>+</button>
+      <button onclick={counter.actions.decrement}>-</button>
+      <button onclick={() => counter.actions.add(5)}>+5</button>
+      <button onclick={counter.actions.reset}>Reset</button>
     </div>
   );
 }
@@ -117,7 +116,8 @@ export default function App() {
 
 ### 🧪 Devtools
 
-Enable logging with the second argument of `defineStore()`:
+You can enable built-in console logging to track state changes during development.
+Pass `true` as the second argument to `defineStore`:
 
 ```tsx
 const store = defineStore({ counter: counterSlice }, true);
@@ -136,28 +136,16 @@ Each action logs:
 ### 📁 Suggested Folder Structure
 
 ```bash
-
 src/
 ├── store/
 │   ├── counterSlice.ts
 │   ├── config.ts
 ├── App.tsx
 └── index.tsx
-
 ```
-
-### 🚫 Limitations
-
-- State resets on full page reload (by design)
-
-- No persistence or middleware support (yet)
-
-- Devtools extension planned (console logs for now)
 
 ### ❤️ Inspired By
 
 - Redux
-
 - Zustand
-
 - Solid primitives
